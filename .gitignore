@@ -1,0 +1,11 @@
+# If you are using PyCharm #
+# User-specific stuff
+.idea/
+# Environments
+venv/
+# Cache files
+**/__pycache__/
+# Database volume
+data/
+# Local environment variables
+.env

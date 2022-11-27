@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  csfr_demo_db:
+    image: postgres:14.0
+    container_name: csfr_demo_db
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${DB_NAME:-postgres}
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U postgres"]
+        interval: 1s
+        timeout: 1s
+        retries: 5
+  csrf_demo_backend:
+    image: csrf_demo_backend
+    container_name: csrf_demo_backend
+    environment:
+      - SECRET_KEY=${SECRET_KEY:-insecure-secret-key}
+      - DEBUG=${DEBUG:-true}
+      - DB_NAME=${DB_NAME:-postgres}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
+      - DB_HOST=${DB_HOST:-csfr_demo_db}
+      - DB_PORT=${DB_PORT:-5432}
+    volumes:
+      - ./csrf_demo:/code
+    ports:
+      - '8000:8000'
+    command: bash -c 'python manage.py migrate &&
+                      python manage.py runserver 0.0.0.0:8000'
+    depends_on:
+      csfr_demo_db:
+        condition: service_healthy
