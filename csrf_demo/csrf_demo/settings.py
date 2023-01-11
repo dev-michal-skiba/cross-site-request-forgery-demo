@@ -39,15 +39,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-MIDDLEWARE = [
+PRE_CSRF_MIDDLEWARES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+]
+IS_CSRF_MIDDLEWARE_ON = os.getenv('IS_CSRF_MIDDLEWARE_ON', 'true').lower() in ['1', 'true']
+CSRF_MIDDLEWARES = ['django.middleware.csrf.CsrfViewMiddleware'] if IS_CSRF_MIDDLEWARE_ON else []
+POST_CSRF_MIDDLEWARES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+MIDDLEWARE = PRE_CSRF_MIDDLEWARES + CSRF_MIDDLEWARES + POST_CSRF_MIDDLEWARES
 
 ROOT_URLCONF = 'csrf_demo.urls'
 

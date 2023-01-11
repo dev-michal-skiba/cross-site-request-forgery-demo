@@ -26,6 +26,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD:-postgres}
       - DB_HOST=${DB_HOST:-csfr_demo_db}
       - DB_PORT=${DB_PORT:-5432}
+      - IS_CSRF_MIDDLEWARE_ON=${IS_CSRF_MIDDLEWARE_ON:-true}
     volumes:
       - ./csrf_demo:/code
     ports:
