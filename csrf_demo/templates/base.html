@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static "style.css" %}" rel="stylesheet"/>
+    {% if csrf_switch %}
+        <title>CSRF Demo | Protection ON</title>
+    {% else %}
+        <title>CSRF Demo | Protection OFF</title>
+    {% endif %}
+
+</head>
+<body>
+    <ul class="navbar">
+        <li class="navbar-element">
+            <a class="navbar-link" href="/">Home</a>
+        </li>
+        {% if logged_in %}
+            <li class="navbar-element navbar-right">
+                <a class="navbar-link" href="/account/update">Update account info</a>
+            </li>
+            <li class="navbar-element navbar-right">
+                <a class="navbar-link" href="/account/logout">Logout</a>
+            </li>
+        {% else %}
+            <li class="navbar-element navbar-right">
+                <a class="navbar-link" href="/account/login">Log In</a>
+            </li>
+            <li class="navbar-element navbar-right">
+                <a class="navbar-link" href="/account/register">Register</a>
+            </li>
+        {% endif %}
+    </ul>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

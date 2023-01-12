@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="form-container">
+        <form method="post">
+            {% if csrf_switch %}
+                {% csrf_token %}
+            {% endif %}
+            {{ form|crispy }}
+            <button class="form-button" type="submit">{{ btn_text }}</button>
+        </form>
+        {% if error_message %}
+            <p class="error-message">{{error_message}}</p>
+        {% endif %}
+        {% if success_message %}
+            <p class="success-message">{{success_message}}</p>
+        {% endif %}
+    </div>
+</form>
+{% endblock %}

@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'home',
+    'account',
 ]
 
 PRE_CSRF_MIDDLEWARES = [
@@ -59,7 +62,7 @@ ROOT_URLCONF = 'csrf_demo.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,7 +129,16 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+HOME_URL = '/'
+
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'None'
