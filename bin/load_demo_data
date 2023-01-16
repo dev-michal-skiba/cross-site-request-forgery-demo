@@ -1,0 +1,1 @@
+docker exec -it csrf_demo_backend python manage.py loaddata demo_data.json
